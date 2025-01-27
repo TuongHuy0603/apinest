@@ -22,7 +22,6 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { CompaniesNoSpecModule } from './companies--no-spec/companies--no-spec.module';
 import { CompaniesModule } from './companies/companies.module';
 
 @Module({
@@ -50,7 +49,6 @@ import { CompaniesModule } from './companies/companies.module';
 
     UsersModule,
     AuthModule,
-    CompaniesNoSpecModule,
     CompaniesModule,
   ],
   controllers: [AppController],
