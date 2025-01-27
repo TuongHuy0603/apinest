@@ -6,6 +6,7 @@ import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 import { Company, CompanyDocument } from './schemas/company.schema';
 import { IUser } from 'src/users/users.interface';
 import { name } from 'ejs';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class CompaniesService {
@@ -43,7 +44,20 @@ export class CompaniesService {
     );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return 'user not found';
+    }
+
+    await this.companyModel.updateOne(
+      {
+        _id: id,
+      },
+      { deletedBy: { _id: user._id, email: user.email } },
+    );
+
+    return await this.companyModel.softDelete({
+      _id: id,
+    });
   }
 }
