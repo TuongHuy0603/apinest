@@ -5,7 +5,7 @@ import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-// import { TransformInterceptor } from './core/transform.interceptor';
+import { TransformInterceptor } from './core/transform.interceptor';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -16,7 +16,7 @@ async function bootstrap() {
 
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new JwtAuthGuard(reflector));
-  // app.useGlobalInterceptors(new TransformInterceptor(reflector));
+  app.useGlobalInterceptors(new TransformInterceptor(reflector));
 
   app.useStaticAssets(join(__dirname, '..', 'public')); //js, css, images
   app.setBaseViewsDir(join(__dirname, '..', 'views')); //view
@@ -41,11 +41,11 @@ async function bootstrap() {
   });
 
   //config versioning
-  // app.setGlobalPrefix('api');
-  // app.enableVersioning({
-  //   type: VersioningType.URI,
-  //   defaultVersion: ['1', '2'] //v1, v2
-  // });
+  app.setGlobalPrefix('api');
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: ['1', '2'], //v1, v2
+  });
 
   //config helmet
   app.use(helmet());
