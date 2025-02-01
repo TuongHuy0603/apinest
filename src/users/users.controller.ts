@@ -19,14 +19,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Public()
+  @ResponseMessage('Create user')
   @Post()
-  async create(
-    // @Body('email') email: string,
-    // @Body('password') password: string,
-    // @Body('name') name: string,
-    @Body() data: CreateUserDto,
-    @User() user: IUser,
-  ) {
+  async create(@Body() data: CreateUserDto, @User() user: IUser) {
     let newUser = await this.usersService.create(data, user);
     return {
       _id: newUser._id,
