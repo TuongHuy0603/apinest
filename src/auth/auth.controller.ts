@@ -42,11 +42,31 @@ export class AuthController {
   @Public()
   @ResponseMessage('Get user refresh token')
   @Get('/refresh')
-  handleGetAccount(
+  handleRefresh(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
     const refreshToken = request.cookies['refresh_token'];
     return this.authService.processNewToken(refreshToken, response);
+  }
+
+  @ResponseMessage('Get account')
+  @Get('/account')
+  handleGetAccount(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.getAccount(request.user, response);
+  }
+
+  @ResponseMessage('Logout User')
+  @Post('/logout')
+  handleLogout(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const refreshToken = request.cookies['refresh_token'];
+
+    return this.authService.logoutUser(refreshToken, response);
   }
 }

@@ -141,4 +141,18 @@ export class AuthService {
       );
     }
   };
+
+  logoutUser = async (refreshToken: any, response: Response) => {
+    await this.usersService.removeRefreshToken(refreshToken);
+
+    response.clearCookie('refresh_token');
+    return 'ok';
+  };
+
+  getAccount = async (user: any, response: Response) => {
+    console.log('czxcz', user);
+    let data = await this.usersService.findOneByUsername(user.email);
+
+    return { user };
+  };
 }
