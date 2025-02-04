@@ -38,6 +38,9 @@ export class Job {
   @Prop()
   endDate: Date;
 
+  @Prop()
+  isActive: boolean;
+
   @Prop({ type: Object })
   createdBy: {
     _id: mongoose.Schema.Types.ObjectId;

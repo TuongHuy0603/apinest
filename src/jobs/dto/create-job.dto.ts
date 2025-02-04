@@ -1,19 +1,30 @@
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsNotEmpty,
   IsNumber,
   IsString,
   IsDate,
+  IsNotEmptyObject,
+  IsObject,
+  ValidateNested,
+  IsBoolean,
 } from 'class-validator';
-import { Types } from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
+class Company {
+  @IsNotEmpty()
+  _id: mongoose.Schema.Types.ObjectId;
+
+  @IsNotEmpty()
+  name: string;
+}
 export class CreateJobDto {
   @IsNotEmpty({ message: 'Tên công việc không được để trống' })
-  @IsString()
   name: string;
 
-  @IsArray()
-  @IsString({ each: true })
+  @IsArray({ message: 'SKill có định dạng là array' })
+  @IsString({ each: true, message: 'Mỗi skill phải là string' })
   @IsNotEmpty({ message: 'Kỹ năng không được để trống' })
   skill: string[];
 
@@ -21,11 +32,11 @@ export class CreateJobDto {
   @IsString()
   password: string;
 
-  @IsNotEmpty({ message: 'Công ty không được để trống' })
-  company: {
-    _id: Types.ObjectId;
-    name: string;
-  };
+  @IsNotEmptyObject()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => Company)
+  company: Company;
 
   @IsNotEmpty({ message: 'Lương không được để trống' })
   @IsNumber()
@@ -44,10 +55,16 @@ export class CreateJobDto {
   description: string;
 
   @IsNotEmpty({ message: 'Ngày bắt đầu không được để trống' })
-  @IsDate()
+  @Transform(({ value }) => new Date(value))
+  @IsDate({ message: 'startDate có định dạng Date' })
   startDate: Date;
 
   @IsNotEmpty({ message: 'Ngày kết thúc không được để trống' })
-  @IsDate()
+  @Transform(({ value }) => new Date(value))
+  @IsDate({ message: 'endDate có định dạng Date' })
   endDate: Date;
+
+  @IsNotEmpty({ message: 'Mô tả công việc không được để trống' })
+  @IsBoolean({ message: 'isActive có định dạng là boolean' })
+  isActive: boolean;
 }
