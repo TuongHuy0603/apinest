@@ -46,7 +46,7 @@ export class CreateJobDto {
   @IsNumber()
   quantity: number;
 
-  @IsNotEmpty({ message: 'Cấp độ không được để trống' })
+  @IsNotEmpty({ message: 'Level không được để trống' })
   @IsString()
   level: string;
 
