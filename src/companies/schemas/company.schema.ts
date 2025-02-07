@@ -13,6 +13,9 @@ export class Company {
   email: string;
 
   @Prop()
+  logo: string;
+
+  @Prop()
   address: string;
 
   @Prop()
