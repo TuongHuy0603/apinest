@@ -32,6 +32,12 @@ export class CreateJobDto {
   @IsString()
   password: string;
 
+  @IsNotEmpty({ message: 'Location không được để trống' })
+  location: string;
+
+  @IsNotEmpty({ message: 'Logo không được để trống' })
+  logo: string;
+
   @IsNotEmptyObject()
   @IsObject()
   @ValidateNested()

@@ -24,11 +24,24 @@ export class JobsService {
       level,
       password,
       quantity,
+      location,
       salary,
       startDate,
     } = createJobDto;
-    let newJob = await this.jobModel.create();
-    return 'This action adds a new job';
+    let newJob = await this.jobModel.create({
+      name,
+      skill,
+      company,
+      description,
+      endDate,
+      level,
+      password,
+      quantity,
+      location,
+      salary,
+      startDate,
+    });
+    return newJob;
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {
