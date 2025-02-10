@@ -25,6 +25,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { CompaniesModule } from './companies/companies.module';
 import { JobsModule } from './jobs/jobs.module';
 import { FilesModule } from './files/files.module';
+import { ResumeModule } from './resume/resume.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { FilesModule } from './files/files.module';
     CompaniesModule,
     JobsModule,
     FilesModule,
+    ResumeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -39,7 +39,7 @@ export class JobsController {
   @Get(':id')
   @ResponseMessage('Fetch job by id')
   findOne(@Param('id') id: string) {
-    return this.jobsService.findOne(+id);
+    return this.jobsService.findOne(id);
   }
 
   @Patch(':id')
