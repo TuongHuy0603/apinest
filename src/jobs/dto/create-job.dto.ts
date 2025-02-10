@@ -1,76 +1,66 @@
 import { Transform, Type } from 'class-transformer';
-import {
-  IsArray,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  IsDate,
-  IsNotEmptyObject,
-  IsObject,
-  ValidateNested,
-  IsBoolean,
-} from 'class-validator';
-import mongoose, { Types } from 'mongoose';
+import { IsArray, IsBoolean, IsDate, IsNotEmpty, IsNotEmptyObject, IsObject, IsString, ValidateNested } from 'class-validator';
+import mongoose from 'mongoose';
+
+//data transfer object // class = { }
 
 class Company {
-  @IsNotEmpty()
-  _id: mongoose.Schema.Types.ObjectId;
+    @IsNotEmpty()
+    _id: mongoose.Schema.Types.ObjectId;
 
-  @IsNotEmpty()
-  name: string;
+    @IsNotEmpty()
+    name: string;
+
+    @IsNotEmpty()
+    logo: string;
 }
+
 export class CreateJobDto {
-  @IsNotEmpty({ message: 'Tên công việc không được để trống' })
-  name: string;
 
-  @IsArray({ message: 'SKill có định dạng là array' })
-  @IsString({ each: true, message: 'Mỗi skill phải là string' })
-  @IsNotEmpty({ message: 'Kỹ năng không được để trống' })
-  skill: string[];
+    @IsNotEmpty({ message: 'name không được để trống', })
+    name: string;
 
-  @IsNotEmpty({ message: 'Mật khẩu không được để trống' })
-  @IsString()
-  password: string;
+    @IsNotEmpty({ message: 'skills không được để trống', })
+    @IsArray({ message: 'skills có định dạng là array', })
+    // "each" tells class-validator to run the validation on each item of the array
+    @IsString({ each: true, message: "skill định dạng là string" })
+    skills: string[];
 
-  @IsNotEmpty({ message: 'Location không được để trống' })
-  location: string;
+    @IsNotEmptyObject()
+    @IsObject()
+    @ValidateNested()
+    @Type(() => Company)
+    company: Company;
 
-  @IsNotEmpty({ message: 'Logo không được để trống' })
-  logo: string;
+    @IsNotEmpty({ message: 'location không được để trống', })
+    location: string;
 
-  @IsNotEmptyObject()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => Company)
-  company: Company;
+    @IsNotEmpty({ message: 'salary không được để trống', })
+    salary: number;
 
-  @IsNotEmpty({ message: 'Lương không được để trống' })
-  @IsNumber()
-  salary: number;
+    @IsNotEmpty({ message: 'quantity không được để trống', })
+    quantity: number;
 
-  @IsNotEmpty({ message: 'Số lượng không được để trống' })
-  @IsNumber()
-  quantity: number;
+    @IsNotEmpty({ message: 'level không được để trống', })
+    level: string;
 
-  @IsNotEmpty({ message: 'Level không được để trống' })
-  @IsString()
-  level: string;
+    @IsNotEmpty({ message: 'description không được để trống', })
+    description: string;
 
-  @IsNotEmpty({ message: 'Mô tả công việc không được để trống' })
-  @IsString()
-  description: string;
+    @IsNotEmpty({ message: 'startDate không được để trống', })
+    @Transform(({ value }) => new Date(value))
+    @IsDate({ message: 'startDate có định dạng là Date' })
+    startDate: Date;
 
-  @IsNotEmpty({ message: 'Ngày bắt đầu không được để trống' })
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: 'startDate có định dạng Date' })
-  startDate: Date;
+    @IsNotEmpty({ message: 'endDate không được để trống', })
+    @Transform(({ value }) => new Date(value))
+    @IsDate({ message: 'endDate có định dạng là Date' })
+    endDate: Date;
 
-  @IsNotEmpty({ message: 'Ngày kết thúc không được để trống' })
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: 'endDate có định dạng Date' })
-  endDate: Date;
-
-  @IsNotEmpty({ message: 'Mô tả công việc không được để trống' })
-  @IsBoolean({ message: 'isActive có định dạng là boolean' })
-  isActive: boolean;
+    @IsNotEmpty({ message: 'isActive không được để trống', })
+    @IsBoolean({ message: 'isActive có định dạng là boolean' })
+    isActive: boolean;
 }
+
+
+

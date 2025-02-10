@@ -5,75 +5,73 @@ export type JobDocument = HydratedDocument<Job>;
 
 @Schema({ timestamps: true })
 export class Job {
-  @Prop()
-  name: string;
-
-  @Prop()
-  skill: string[];
-
-  @Prop()
-  password: string;
-
-  @Prop({ type: Object })
-  company: {
-    _id: mongoose.Schema.Types.ObjectId;
+    @Prop()
     name: string;
-    logo: string;
-  };
 
-  @Prop()
-  location: number;
+    @Prop()
+    skills: string[];
 
-  @Prop()
-  salary: number;
+    @Prop({ type: Object })
+    company: {
+        _id: mongoose.Schema.Types.ObjectId;
+        name: string;
+        logo: string;
+    };
 
-  @Prop()
-  quantity: number;
+    @Prop()
+    location: string;
 
-  @Prop()
-  level: string;
+    @Prop()
+    salary: number;
 
-  @Prop()
-  description: string;
+    @Prop()
+    quantity: number;
 
-  @Prop()
-  startDate: Date;
+    @Prop()
+    level: string;
 
-  @Prop()
-  endDate: Date;
+    @Prop()
+    description: string;
 
-  @Prop()
-  isActive: boolean;
+    @Prop()
+    startDate: Date;
 
-  @Prop({ type: Object })
-  createdBy: {
-    _id: mongoose.Schema.Types.ObjectId;
-    email: string;
-  };
+    @Prop()
+    endDate: Date;
 
-  @Prop({ type: Object })
-  updatedBy: {
-    _id: mongoose.Schema.Types.ObjectId;
-    email: string;
-  };
+    @Prop()
+    isActive: boolean;
 
-  @Prop({ type: Object })
-  deletedBy: {
-    _id: mongoose.Schema.Types.ObjectId;
-    email: string;
-  };
+    @Prop({ type: Object })
+    createdBy: {
+        _id: mongoose.Schema.Types.ObjectId;
+        email: string;
+    }
 
-  @Prop()
-  createdAt: Date;
+    @Prop({ type: Object })
+    updatedBy: {
+        _id: mongoose.Schema.Types.ObjectId;
+        email: string;
+    }
 
-  @Prop()
-  updatedAt: Date;
+    @Prop({ type: Object })
+    deletedBy: {
+        _id: mongoose.Schema.Types.ObjectId;
+        email: string;
+    }
 
-  @Prop()
-  isDeleted: boolean;
+    @Prop()
+    createdAt: Date;
 
-  @Prop()
-  deletedAt: Date;
+    @Prop()
+    updatedAt: Date;
+
+    @Prop()
+    isDeleted: boolean;
+
+    @Prop()
+    deletedAt: Date;
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);
+
